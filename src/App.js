@@ -1,30 +1,57 @@
 import React, { Component } from 'react';
 import './App.css';
 
-
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      message : "React App"
-    }
+      message : 'Hello Coding Garden!!!',
+      newTodo : '',
+      todos : [{
+        title : 'Learn React',
+        done : false
+      }, {
+        title : 'Learn JSX',
+        done :false
+      }]
+    };
   }
+
+  newTodoChanged(event) {
+    this.setState({
+      newTodo : event.target.value
+    });
+  }
+
+  formSubmitted(event) {
+    event.preventDefault();
+    this.setState({
+      newTodo : '',
+      todos : [...this.state.todos, {
+        title : this.state.newTodo,
+        done : false
+      }]
+    });
+  }
+
+
   render() {
     return (
       <div className = "App">
-
-        <h1>{this.state.message}</h1>
-        <form className = "size">
-          <label  htmlFor = "username">USERNAME</label>
-          <input class ="u-full-width" type ="text" id = "username" username ="username"/>
-          <label  htmlFor = "password">PASSWORD</label>
-          <input class ="u-full-width" type ="password" id = "password" password ="password"/>
-          <label  htmlFor = "confirmPassword">CONFIRM PASSWORD</label>
-          <input class ="u-full-width" type ="text" id = "confirmPassword" confirmPassword ="confirmPassword"/>
-          <button className = "button-primary">Sign up</button>
-        </form>
-          
-        </div>
+         <h3>{this.state.message}</h3>
+         <form onSubmit = {(event) => this.formSubmitted(event)}>
+            <label htmlFor = "newTodo">New Todo</label>
+            <input onChange = {(event) => this.newTodoChanged(event)} id = "newTodo" name = "newTodo" value = {this.state.newTodo} />
+            <button type = "submit">Add Todo</button>
+         </form>
+         <ul>
+            {this.state.todos.map((todo) => {
+              return <li  key = {todo.title}>
+                 {todo.title}
+              </li>
+            })}
+         </ul>
+      </div> 
     );
   }
 }
