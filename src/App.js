@@ -34,6 +34,14 @@ class App extends Component {
     });
   }
 
+  toggleTodoDone(event, index) {
+    const todos = [...this.state.todos]; //copy the array
+    todos[index] = {...todos[index]};   //copy the todo
+    todos[index].done = event.target.checked; //update done property on copied todo.
+    this.setState({
+     todos 
+    });    
+  }
 
   render() {
     return (
@@ -45,10 +53,10 @@ class App extends Component {
             <button type = "submit">Add Todo</button>
          </form>
          <ul>
-            {this.state.todos.map((todo) => {
-              return <li  key = {todo.title}>
-                 {todo.title}
-              </li>
+            {this.state.todos.map((todo,index) => {
+              return (<li  key = {todo.title}>
+                 <input onChange ={(event) => this.toggleTodoDone(event,index)} type = "checkbox"/>{todo.title}
+              </li>)
             })}
          </ul>
       </div> 
