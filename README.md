@@ -18,3 +18,5 @@
   newTodoChanged and formSubmitted.
 
 .showing the todos in the screen and clearing the input when we click the addTodo.
+
+.adding All done and remove button to the screen
