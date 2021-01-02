@@ -1,88 +1,75 @@
 import React, { Component } from 'react';
-import NewTodoForm from './Components/NewTodoForm';
-import TodoList from './Components/TodoList';
-import './App.css';
+
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      message : 'Hello Coding Garden!!!',
-      newTodo : '',
-      todos : [{
-        title : 'Learn React',
-        done : false
-      }, {
-        title : 'Learn JSX',
-        done :false
-      }]
-    };
-  }
-
-  newTodoChanged(event) {
-    this.setState({
-      newTodo : event.target.value
-    });
-  }
-
-  formSubmitted(event) {
-    event.preventDefault();
-    this.setState({
-      newTodo : '',
-      todos : [...this.state.todos, {
-        title : this.state.newTodo,
-        done : false
-      }]
-    });
-  }
-
-  toggleTodoDone(event, index) {
-    const todos = [...this.state.todos]; //copy the array
-    todos[index] = {...todos[index]};   //copy the todo
-    todos[index].done = event.target.checked; //update done property on copied todo.
-    this.setState({
-     todos 
-    });    
-  }
-
-  removeTodo(index) {
-     const todos = [...this.state.todos];
-     todos.splice(index, 1);
-     this.setState({
-        todos
-     });
-  }
-
-  allDone() {
-    const todos = this.state.todos.map((todo) => {
-      return {
-        title : todo.title,
-        done : true 
-      };
-    });
-    this.setState({
-      todos
-    });
-  }
-
-  render() {
-    return (
-      <div className = "App">
-         <h3>{this.state.message}</h3>
-          <NewTodoForm
-          newTodo = {this.state.newTodo} 
-          formSubmitted = {this.formSubmitted.bind(this)}
-          newTodoChanged = {this.newTodoChanged.bind(this)} 
-          />
-         <button onClick={() => this.allDone()}>All Done</button>
-         <TodoList
-           todos = {this.state.todos}
-           toggleTodoDone = {this.toggleTodoDone.bind(this)}
-           removeTodo = {this.removeTodo.bind(this)}
-          />
-      </div> 
-    );
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            firstName : null,
+            lastName : null,
+            email : null,
+            password : null,
+        }
+     }
+    render() {
+        return (
+            <div className = "wrapper">
+               <div className = "form-wrapper">
+                  <h1>Create Account</h1> 
+                  <form onSubmit = {this.handleSubmit} noValidate>
+                     <div className = "firstName">
+                        <label htmlFor = "firstName">First Name</label>
+                        <input 
+                           type = "text" 
+                           className = "" 
+                           placeholder = "First Name" 
+                           name = "firstName"
+                           onChange = {this.handleChange}
+                           noValidate/>
+                     </div>
+                     <div className = "lastName">
+                        <label htmlFor = "lastName">Last Name</label>
+                        <input 
+                           type = "text" 
+                           className = "" 
+                           placeholder = "Last Name" 
+                           name = "lastName"
+                           onChange = {this.handleChange}
+                           noValidate/>
+                     </div>
+                     <div className = "email">
+                        <label htmlFor = "email">Email</label>
+                        <input 
+                           type = "email" 
+                           className = "" 
+                           placeholder = "Email" 
+                           name = "email"
+                           onChange = {this.handleChange}
+                           noValidate/>
+                     </div>
+                     <div className = "password">
+                        <label htmlFor = "password">password</label>
+                        <input 
+                           type = "password" 
+                           className = "" 
+                           placeholder = "Password" 
+                           name = "password"
+                           onChange = {this.handleChange}
+                           noValidate/>
+                     </div>
+                     <div className = "createAccount">
+                        <button type = "submit">
+                             Create Account
+                        </button>
+                        <small>
+                            Already Have an Account
+                        </small>
+                     </div>
+                  </form>
+               </div>
+            </div>
+        );
+    }
 }
 
 export default App;

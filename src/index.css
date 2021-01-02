@@ -4,8 +4,3 @@ body {
   font-family : sans-serif;
 }
 
-
-input[type = "checkbox"] {
-  display : inline;
-  width : auto;
-}
