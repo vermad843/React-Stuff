@@ -1,4 +1,17 @@
 import React, { Component } from 'react';
+import './App.css';
+
+const emailRegex = RegExp(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/)
+
+
+const formValid = formErrors => {
+    let valid = true;
+
+    Object.values(formErrors).forEach(val => { 
+        val.length > 0 && (valid = false)
+      });
+    return valid;
+};
 
 
 class App extends Component {
@@ -9,8 +22,74 @@ class App extends Component {
             lastName : null,
             email : null,
             password : null,
-        }
+            formErrors : {
+                firstName : "",
+                lastName : "",
+                email : "",
+                password : "",
+            }
+        };
      }
+
+    handleSubmit = (e) => {
+     e.preventDefault();
+     if(formValid(this.state.formErrors)) {
+        console.log(
+            `
+         --SUBMITTING--
+           First Name : ${this.state.firstName}
+           Last Name : ${this.state.lastName}
+           Email : ${this.state.email}
+           Password : ${this.state.password} 
+            `   
+        ) 
+     }else {
+         console.log('FORM INVALID')
+     }
+    }
+
+
+    handleChange = (e) => {
+        e.preventDefault();
+        const {name , value} = e.target;
+        let formErrors = this.state.formErrors;
+       
+        console.log("Name : ", name);
+        console.log("value :", value);
+        
+        switch(name) {
+           case 'firstName' : 
+              formErrors.firstName = 
+              value.length < 3 && value.length > 0 
+              ? 'minimum 3 characters required' 
+              : "" ;
+            break; 
+           case 'lastName' : 
+            formErrors.lastName = 
+            value.length < 3 && value.length > 0 
+            ? 'minimum 3 characters required' 
+            : "" ;
+            break;  
+            case 'email' : 
+              formErrors.email = 
+              emailRegex.test(value) && value.length > 0 
+              ? ''
+              : 'invalid email address' ;
+            break; 
+           case 'password' : 
+            formErrors.password = 
+            value.length < 6 && value.length > 0 
+            ? 'minimum 6 characters required' 
+            : "" ;
+            break;  
+           default:
+            break; 
+        }
+        this.setState({
+            formErrors, [name] : value }, () => console.log());
+    };
+    
+
     render() {
         return (
             <div className = "wrapper">
